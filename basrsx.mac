@@ -697,7 +697,8 @@ frw:	ld	a,(hl)		; A = LUN
 	ld	(rwqio+Q.BLK),bc
 	ld	hl,0
 	ld	(rwqio+Q.BLK+2),hl
-	ld	(rwqio+Q.OFS+2),hl
+	ld	(rwqio+Q.OFS),hl
+	ld	(rwqio+Q.VFC),hl
 	ld	hl,512
 	ld	(rwqio+Q.LEN),hl
 	ld	hl,rwqio
@@ -1735,13 +1736,13 @@ buf:	ds	9		; used by PFN
 IO.ATA	equ	IO.ATT OR (TF.AST SHL 8)
 
 attqio:	QIOW$	IO.ATA,LUNTI,TOEFN,QIOSB,,<TTAST>
-ttoqio:	QIOW$	IO.WVB,LUNTI,TOEFN,QIOSB,,<ttobuf,,,,0>
+ttoqio:	QIOW$	IO.WVB,LUNTI,TOEFN,QIOSB,,<ttobuf,,0,,,0>
 opnqio:	QIOW$	IO.ACC,0,0,QIOSB,,<,,,,>
 clsqio:	QIOW$	IO.DEA,0,0,QIOSB,,<>
 delqio:	QIOW$	IO.DEL,0,0,QIOSB,,<>
 renqio:	QIOW$	IO.REN,0,0,QIOSB,,<,>
 ratqio:	QIOW$	IO.RAT,0,0,QIOSB,,<,FINFSZ>
-rwqio:	QIO$	IO.RVB,0,0,0,0,,<,,,,>
+rwqio:	QIO$	IO.RVB,0,0,0,0,,<,,,,,>
 QIOSB:	ds	4
 
 str:	ds	2
