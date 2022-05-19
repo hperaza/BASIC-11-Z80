@@ -34,13 +34,18 @@ $(OBJS): %.rel: %.mac *.inc
 	$(ZXCC) $(ZSM4) -"="$</l/s7
 
 $(PROGRSX): $(OBJS)
-	@echo -e "   basfp,bascli,basic1,basic2,&\r" > build.cmd
-	@echo -e "   basic3,basic4,basic5,baserr,basrsx,basinit,basdat/task=...BAS/asg=TI:1,SY:2-13\r" >> build.cmd
-	$(ZXCC) $(TKB) -"$@,basicrsx.sym,basicrsx.map=basmain/ofmt=tsk,&" < build.cmd
+	@echo -e $@",basicrsx.sym,basicrsx.map=basmain/ofmt:tsk,&\r" > build.cmd
+	@echo -e "basfp,bascli,basic1,basic2,basic3,basic4,basic5,&\r" >> build.cmd
+	@echo -e "baserr,basrsx,basinit,basdat/task=...BAS/asg=TI:1,SY:2-13\r" >> build.cmd
+	$(ZXCC) $(TKB) -"@build.cmd"
 	@rm build.cmd
 
 $(PROGCPM): $(OBJS)
-	$(ZXCC) $(TKB) -"$@,basiccpm.sym=basmain/ofmt=com,basfp,bascli,basic1,basic2,basic3,basic4,basic5,baserr,bascpm,basinit,basdat"
+	@echo -e $@",basiccpm.sym=basmain/ofmt:com,&\r" > build.cmd
+	@echo -e "basfp,bascli,basic1,basic2,basic3,basic4,basic5,&\r" >> build.cmd
+	@echo -e "baserr,bascpm,basinit,basdat\r" >> build.cmd
+	$(ZXCC) $(TKB) -"@build.cmd"
+	@rm build.cmd
 
 copy: $(PROGRSX)
 	@echo "cd system" > cp.cmd
