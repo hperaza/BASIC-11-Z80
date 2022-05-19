@@ -20,8 +20,13 @@ QDBSZ	equ	Q.P6 + 2	; QDB size
 
 Q.BUF	equ	Q.P1		; buffer address in user space (2 bytes)
 Q.LEN	equ	Q.P2		; byte count (2 bytes)
-Q.BLK	equ	Q.P3		; block number (4 bytes)
-Q.OFS	equ	Q.P5		; offset within block (2 bytes)
+Q.VFC	equ	Q.P3		; vertical format control (2 bytes)
+Q.TMO	equ	Q.P3		; read timeout (2 bytes)
+Q.BLK	equ	Q.P4		; block number (4 bytes)
+Q.OFS	equ	Q.P6		; offset within block (2 bytes)
+Q.PRB	equ	Q.P4		; prompt buffer address (2 bytes)
+Q.PRL	equ	Q.P5		; prompt length (2 bytes)
+Q.PVF	equ	Q.P6		; prompt vertical format control (2 bytes)
 
 ; QIO function codes
 
@@ -47,6 +52,10 @@ IO.RPR	equ	9		; read with prompt
 IO.HNG	equ	10		; hangup remote line
 SF.GMC	equ	11		; get multiple characteristics
 SF.SMC	equ	12		; set multiple characteristics
+
+; Special functions
+
+IO.LOV	equ	16		; load overlay
 
 ; Terminal sub-functions (some can be ORed)
 
